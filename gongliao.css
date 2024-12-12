@@ -1,0 +1,201 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    background-color: black;
+}
+
+.cover-container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://yufan1120.github.io/gongliao-street/cover.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.content {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.main-title, .story-text {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #232323;
+    text-align: center;
+    opacity: 0;
+    max-width: 80%;
+    transition: opacity 0.5s ease;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.story-text {
+    font-size: 1.5rem;
+    display: none;
+}
+
+.start-button {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 40px;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #232323;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    border-radius: 12px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.section-container {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    background-color: black;
+    z-index: 2;
+}
+
+.section-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.bg1 {
+    background-image: url('https://yufan1120.github.io/gongliao-street/map1.png');
+    opacity: 1;
+}
+
+.bg2 {
+    background-image: url('https://yufan1120.github.io/gongliao-street/map2.png');
+}
+
+.bg3 {
+    background-image: url('https://yufan1120.github.io/gongliao-street/map3.png');
+}
+
+.section-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+}
+
+.section-title {
+    font-weight: bold;
+    color: #232323;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.timeline-container {
+    position: relative;
+    max-width: 600px;
+    margin-left: 100px;
+    padding-left: 50px;
+    border-left: 4px solid rgba(255, 255, 255, 0.3);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 100px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -54px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+}
+
+.timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline-title {
+    margin: 0 0 10px 0;
+    color: #232323;
+    font-size: 1.5rem;
+}
+
+.timeline-item p {
+    margin: 0;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* 當滾動到第二區塊時，隱藏第一個背景 */
+.scrolled .background-image {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .story-text {
+        font-size: 1.2rem;
+    }
+    
+    .start-button {
+        font-size: 1.2rem;
+        padding: 15px 30px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .timeline-container {
+        margin-left: 30px;
+    }
+}
