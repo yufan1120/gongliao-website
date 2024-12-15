@@ -535,3 +535,32 @@
     left: 2%;
     bottom: -25%;
 }
+
+/* 美術館場景設計 */
+.moving-section {
+    height: 300vh;
+    position: relative;
+}
+
+.moving-section .background-section {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.character8 {
+    right: 20%;
+    bottom: -1.8%;
+    height: 210px;
+    width: auto;
+}
+
+.character9 {
+    left: 37%;
+    bottom: 10%;
+    height: 200px;
+    width: auto;
+}
