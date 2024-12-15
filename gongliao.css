@@ -1,91 +1,136 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-    background-color: black;
+/* 整體容器 */
+.content-wrapper {
+    position: relative;
 }
 
-.cover-container {
+/* 介紹區塊 */
+.intro-section {
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.intro-section.navigated {
     position: relative;
+    height: 100vh;
+}
+
+/* 背景容器 */
+.bg-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+/* 文字容器 */
+.text-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+/* 主標題和介紹文字共用樣式 */
+.main-title, .intro-text {
+    position: absolute;
+    right: 4%;
+    top: 11%;
+    color: #232323;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/* 主標題特有樣式 */
+.main-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    width: 70%;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* 介紹文字特有樣式 */
+.intro-text {
+    font-size: 1.25rem;
+    font-weight: normal;
+    line-height: 1.8;
+    width: 50%;
+    text-align: justify;
+    text-align-last: left;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+/* 啟動狀態 */
+.active {
+    opacity: 1;
+}
+
+/* 導覽列樣式 */
+.nav-bar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+    z-index: 3;
+}
+
+.nav-bar.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.explore-btn {
+    padding: 12px 24px;
+    font-size: 1.3rem;
+    color: #fff;
+    background-color: rgba(35, 35, 35, 0.25);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.explore-btn:hover {
+    transform: scale(1.05);
+    background-color: #404040;
+}
+
+/* 第二區塊內容 */
+.content-section {
+    position: relative; /* 改為 relative */
+    width: 100%;
+}
+
+/* Sticky wrapper */
+.sticky-wrapper {
+    height: 400vh;
+    position: relative;
+}
+
+.sticky-container {
+    position: sticky;
+    top: 0;
     height: 100vh;
     width: 100%;
     overflow: hidden;
 }
 
-.background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-image: url('https://yufan1120.github.io/gongliao-street/cover.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.content {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-}
-
-.main-title, .story-text {
-    position: fixed;
-    top: 15%;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #232323;
-    text-align: center;
-    opacity: 0;
-    max-width: 80%;
-    transition: opacity 0.5s ease;
-}
-
-.main-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    opacity: 1;
-}
-
-.story-text {
-    font-size: 1.5rem;
-    display: none;
-}
-
-.start-button {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px 40px;
-    background-color: rgba(255, 255, 255, 0.7);
-    color: #232323;
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    border-radius: 12px;
-    font-weight: bold;
-    z-index: 2;
-}
-
-.section-container {
-    position: relative;
-    min-height: 100vh;
-    width: 100%;
-    background-color: black;
-    z-index: 2;
-}
-
-.section-background {
+/* 背景圖片層 */
+.bg-image {
     position: absolute;
     top: 0;
     left: 0;
@@ -93,109 +138,168 @@ body, html {
     height: 100%;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    z-index: 1;
     opacity: 0;
-    transition: opacity 1s ease;
+    transition: opacity 0.8s ease-in-out;
 }
 
-.bg1 {
-    background-image: url('https://yufan1120.github.io/gongliao-street/map1.png');
+.bg-image.active {
     opacity: 1;
 }
 
-.bg2 {
-    background-image: url('https://yufan1120.github.io/gongliao-street/map2.png');
-}
-
-.bg3 {
-    background-image: url('https://yufan1120.github.io/gongliao-street/map3.png');
-}
-
-.section-content {
-    position: relative;
-    z-index: 2;
-    padding: 2rem;
-}
-
-.section-title {
-    font-weight: bold;
-    color: #232323;
-    font-size: 2rem;
-    margin-bottom: 2rem;
-}
-
-.timeline-container {
-    position: relative;
-    max-width: 600px;
-    margin-left: 100px;
-    padding-left: 50px;
-    border-left: 4px solid rgba(255, 255, 255, 0.3);
-}
-
-.timeline-item {
-    position: relative;
-    margin-bottom: 100px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.timeline-item::before {
-    content: '';
+/* 遮罩層 */
+.left-overlay {
     position: absolute;
-    left: -54px;
-    top: 50%;
-    width: 12px;
-    height: 12px;
-    background: white;
-    border-radius: 50%;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background-color: rgba(35, 35, 35, 0.7);
+    z-index: 2;
 }
 
-.timeline-item.visible {
-    opacity: 1;
-    transform: translateY(0);
+/* 標題樣式 */
+.section-title {
+    position: absolute;
+    left: 3%;
+    top: 10%; /* 稍微調整標題位置 */
+    color: #fff;
+    font-size: 1.9rem;
+    font-weight: bold;
+    z-index: 3;
 }
 
-.timeline-title {
-    margin: 0 0 10px 0;
-    color: #232323;
-    font-size: 1.5rem;
+/* 文字區塊容器 */
+.text-blocks {
+    position: absolute;
+    left: 3%;
+    top: 25%; /* 調整到 25% */
+    width: 34%;
+    z-index: 3;
 }
 
-.timeline-item p {
-    margin: 0;
-    color: #444;
-    line-height: 1.6;
-}
-
-/* 當滾動到第二區塊時，隱藏第一個背景 */
-.scrolled .background-image {
+/* 文字區塊基本樣式 */
+.text-block {
     opacity: 0;
-    pointer-events: none;
+    visibility: hidden;
+    position: absolute;
+    width: 100%;
+    transition: opacity 0.8s ease-in-out, visibility 0s 0.8s;
+    color: #fff;
 }
 
-@media (max-width: 768px) {
-    .main-title {
-        font-size: 1.8rem;
-    }
-    
-    .story-text {
-        font-size: 1.2rem;
-    }
-    
-    .start-button {
-        font-size: 1.2rem;
-        padding: 15px 30px;
-    }
+/* 特殊處理第一和第二段 */
+.text-block:nth-child(1) {
+    position: relative;
+}
 
-    .section-title {
-        font-size: 1.5rem;
-    }
-    
-    .timeline-container {
-        margin-left: 30px;
-    }
+.text-block:nth-child(2) {
+    position: relative;
+    margin-top: 20px;
+}
+
+/* 第三段之後的文字區塊 */
+.text-block:nth-child(n+3) {
+    position: absolute;
+    top: 0;
+}
+
+/* 啟動狀態 */
+.text-block.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s ease-in-out, visibility 0s;
+}
+
+.text-block-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.text-block-content {
+    font-size: 1rem;
+    line-height: 1.8;
+    text-align: justify;
+    text-align-last: left;
+}
+
+/* Loading 容器基礎樣式 */
+.loading-container {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+/* Loading 容器可見狀態 */
+.loading-container.visible {
+    opacity: 1;
+}
+
+/* Loading 區塊樣式 */
+.full-bg {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1; /* 改為預設就不透明 */
+}
+
+/* Loading GIF 樣式 */
+.loading-container {
+    min-height: 100vh;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1002;
+}
+
+.loading-gif {
+    width: 150px;
+    height: 150px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.loading-gif.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.background-section {
+    min-height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+/* 遮罩層樣式 */
+.transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.transition-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
