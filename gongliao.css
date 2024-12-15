@@ -321,18 +321,20 @@
 
 .character {
     position: absolute;
-    height: 300px;
-    width: auto;
 }
 
 .character1 {
     left: 5%;
-    bottom: -8.6%;
+    bottom: -9%;
+    height: 300px;
+    width: auto;
 }
 
 .character2 {
     right: 35%;
     bottom: -6%;
+    height: 300px;
+    width: auto;
 }
 
 .text-box {
@@ -502,4 +504,34 @@
     margin-bottom: 15px;
     line-height: 1.7;
     padding: 0 16px;
+}
+
+/* 樂文診所人物位置更動 */
+.character4 {
+    right: 35%;
+    bottom: -2.4%;
+    height: 265px;
+    width: auto;
+}
+
+.character5 {
+    height: 550px;
+    width: auto;
+    left: 15%;
+    bottom: -20%;
+}
+
+/* 雨布丁人物位置更動 */
+.character6 {
+    right: 30%;
+    bottom: -4%;
+    height: 300px;
+    width: auto;
+}
+
+.character7 {
+    height: 600px;
+    width: auto;
+    left: 2%;
+    bottom: -25%;
 }

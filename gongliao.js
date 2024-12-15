@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 計算區段已滾動的距離
         const sectionScrolled = -sectionRect.top;
-        const triggerPoint = windowHeight * 0.6; // 60vh 的觸發點
+        const triggerPoint = windowHeight * 0.4; // 40vh 的觸發點
         
         // 當滾動到 40vh 時顯示內容
         if (sectionScrolled >= triggerPoint) {
@@ -312,16 +312,16 @@ document.addEventListener('DOMContentLoaded', function() {
         lastScrollTop = window.pageYOffset;
 
         // 處理長區塊
-        const longSection = document.querySelector('.long-section');
-        if (longSection) {
-            handleLongSection(longSection);
-        }
+        const longSections = document.querySelectorAll('.long-section');
+        longSections.forEach(section => {
+            handleLongSection(section);
+        });
 
         // 處理擴展區塊
-        const extendedSection = document.querySelector('.extended-section');
-        if (extendedSection) {
-            handleExtendedSection(extendedSection);
-        }
+        const extendedSections = document.querySelectorAll('.extended-section');
+        extendedSections.forEach(section => {
+            handleExtendedSection(section);
+        });
 
         // 處理地圖區域
         const rect = stickyWrapper.getBoundingClientRect();
