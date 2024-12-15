@@ -238,6 +238,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // 處理移動區塊的滾動效果
+    function handleMovingSection(section) {
+        // 取得必要的元素
+        const movingCharacter = section.querySelector('.moving-character');
+        const textBoxes = section.querySelectorAll('.text-box');
+        
+        // 計算捲動進度
+        const sectionRect = section.getBoundingClientRect();
+        const sectionTop = window.pageYOffset + sectionRect.top;
+        const windowHeight = window.innerHeight;
+        const scrollProgress = (window.pageYOffset - sectionTop) / (section.offsetHeight - windowHeight);
+        
+        // 角色移動處理
+        if (scrollProgress >= 0 && scrollProgress <= 0.94) {  // 0% ~ 94% 的捲動範圍內
+            // 計算移動距離：從 10px 移動到 螢幕寬度 + 角色寬度
+            const totalDistance = window.innerWidth + 300; // 300px 是為了確保完全移出螢幕
+            const translateX = 10 + (scrollProgress * totalDistance);  // 起始位置 10px
+            movingCharacter.style.transform = `translateX(${translateX}px)`;
+            movingCharacter.style.opacity = '1';
+        } else if (scrollProgress > 0.94) {  // 超過 94% 後
+            movingCharacter.style.opacity = '0';  // 角色消失
+        }
+        
+        // 文字框出現處理
+        // 第一個文字框 - 130vh (26% = 130/500)
+        if (scrollProgress >= 0.26) {
+            textBoxes[0].classList.add('active');
+        } else {
+            textBoxes[0].classList.remove('active');
+        }
+        
+        // 第二個文字框 - 260vh (52% = 260/500)
+        if (scrollProgress >= 0.52) {
+            textBoxes[1].classList.add('active');
+        } else {
+            textBoxes[1].classList.remove('active');
+        }
+        
+        // 第三個文字框 - 390vh (78% = 390/500)
+        if (scrollProgress >= 0.78) {
+            textBoxes[2].classList.add('active');
+        } else {
+            textBoxes[2].classList.remove('active');
+        }
+    }
+
     // 處理擴展區塊的滾動效果
     function handleExtendedSection(section) {
         const contentWrapper = section.querySelector('.content-wrapper-fade');
@@ -315,6 +361,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const longSections = document.querySelectorAll('.long-section');
         longSections.forEach(section => {
             handleLongSection(section);
+        });
+
+        // 處理移動區塊
+        const movingSections = document.querySelectorAll('.moving-section');
+        movingSections.forEach(section => {
+            handleMovingSection(section);
         });
 
         // 處理擴展區塊

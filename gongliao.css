@@ -328,6 +328,7 @@
     bottom: -9%;
     height: 300px;
     width: auto;
+    z-index: 5;
 }
 
 .character2 {
@@ -536,9 +537,9 @@
     bottom: -25%;
 }
 
-/* 美術館場景設計 */
+/* Moving Section Styles */
 .moving-section {
-    height: 300vh;
+    height: 500vh;
     position: relative;
 }
 
@@ -549,18 +550,70 @@
     width: 100%;
     background-size: cover;
     background-position: center;
+    overflow: hidden;
 }
 
-.character8 {
-    right: 20%;
-    bottom: -1.8%;
-    height: 210px;
+.moving-section .character {
+    position: absolute;
+}
+
+.moving-section .moving-character {
+    left: 10px; /* 起始位置改為 10px */
+    bottom: -9%;
+    height: 300px;
     width: auto;
+    transition: transform 0.1s linear;
+    z-index: 2;
 }
 
-.character9 {
+.moving-section .character8 {
+    right: 35%;
+    bottom: -6%;
+    height: 220px;
+    width: auto;
+    z-index: 1;
+}
+
+.moving-section .character9 {
     left: 37%;
     bottom: 10%;
     height: 200px;
     width: auto;
+    z-index: 1;
+}
+
+/* Text box styles remain the same */
+.moving-section .text-box {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #232323;
+    padding: 15px 20px;
+    border-radius: 10px;
+    width: 450px;  /* 更新寬度為 450px */
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.moving-section .text-box.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.moving-section .text-box-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.moving-section .section-title {
+    position: absolute;
+    left: 4%;
+    top: 8%;
+    color: #ffffff;
+    font-size: 1.9rem;
+    font-weight: bold;
+    z-index: 1;
 }
