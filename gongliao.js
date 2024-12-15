@@ -240,43 +240,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 處理移動區塊的滾動效果
     function handleMovingSection(section) {
-        // 取得必要的元素
         const movingCharacter = section.querySelector('.moving-character');
         const textBoxes = section.querySelectorAll('.text-box');
         
-        // 計算捲動進度
         const sectionRect = section.getBoundingClientRect();
         const sectionTop = window.pageYOffset + sectionRect.top;
         const windowHeight = window.innerHeight;
         const scrollProgress = (window.pageYOffset - sectionTop) / (section.offsetHeight - windowHeight);
         
-        // 角色移動處理
-        if (scrollProgress >= 0 && scrollProgress <= 0.94) {  // 0% ~ 94% 的捲動範圍內
-            // 計算移動距離：從 10px 移動到 螢幕寬度 + 角色寬度
-            const totalDistance = window.innerWidth + 300; // 300px 是為了確保完全移出螢幕
-            const translateX = 10 + (scrollProgress * totalDistance);  // 起始位置 10px
+        if (scrollProgress >= 0 && scrollProgress <= 0.94) {
+            const totalDistance = window.innerWidth + 300;
+            const translateX = 10 + (scrollProgress * totalDistance);
             movingCharacter.style.transform = `translateX(${translateX}px)`;
             movingCharacter.style.opacity = '1';
-        } else if (scrollProgress > 0.94) {  // 超過 94% 後
-            movingCharacter.style.opacity = '0';  // 角色消失
+        } else if (scrollProgress > 0.94) {
+            movingCharacter.style.opacity = '0';
         }
         
         // 文字框出現處理
-        // 第一個文字框 - 130vh (26% = 130/500)
         if (scrollProgress >= 0.26) {
             textBoxes[0].classList.add('active');
         } else {
             textBoxes[0].classList.remove('active');
         }
         
-        // 第二個文字框 - 260vh (52% = 260/500)
         if (scrollProgress >= 0.52) {
             textBoxes[1].classList.add('active');
         } else {
             textBoxes[1].classList.remove('active');
         }
         
-        // 第三個文字框 - 390vh (78% = 390/500)
         if (scrollProgress >= 0.78) {
             textBoxes[2].classList.add('active');
         } else {
@@ -291,36 +284,29 @@ document.addEventListener('DOMContentLoaded', function() {
         const sectionRect = section.getBoundingClientRect();
         const windowHeight = window.innerHeight;
         
-        // 計算區段已滾動的距離
         const sectionScrolled = -sectionRect.top;
-        const triggerPoint = windowHeight * 0.4; // 40vh 的觸發點
+        const triggerPoint = windowHeight * 0.4;
         
-        // 當滾動到 40vh 時顯示內容
         if (sectionScrolled >= triggerPoint) {
             if (contentWrapper) {
                 contentWrapper.classList.add('visible');
             }
             
-            // 計算文字捲動
             if (scrollTextContent) {
-                // 從 40vh 開始計算捲動進度
                 const scrollProgress = Math.max(0, Math.min(1, 
                     (sectionScrolled - triggerPoint) / (section.offsetHeight - windowHeight - triggerPoint)
                 ));
                 
-                // 計算文字內容應該移動的距離
                 const contentHeight = scrollTextContent.offsetHeight;
                 const maxScroll = contentHeight - windowHeight;
                 const scrollDistance = maxScroll * scrollProgress;
                 
-                // 應用位移
                 scrollTextContent.style.transform = `translateY(-${scrollDistance}px)`;
             }
         } else {
             if (contentWrapper) {
                 contentWrapper.classList.remove('visible');
             }
-            // 重置文字位置
             if (scrollTextContent) {
                 scrollTextContent.style.transform = 'translateY(0)';
             }
@@ -341,6 +327,32 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+
+    // 重新開始按鈕點擊事件
+    const restartBtn = document.querySelector('.restart-btn');
+    if (restartBtn) {
+        restartBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            // 重置所有狀態
+            hasNavigated = false;
+            currentState = 0;
+            document.body.style.overflow = 'hidden';
+            introSection.classList.remove('navigated');
+            contentSection.classList.remove('active');
+            
+            // 重置文字顯示
+            title.classList.add('active');
+            [text1, text2, text3].forEach(text => text.classList.remove('active'));
+            exploreNav.classList.remove('active');
+            
+            // 重新初始化第二區塊
+            initializeContent();
+        });
+    }
 
     // 主要滾動事件處理
     window.addEventListener('scroll', function() {

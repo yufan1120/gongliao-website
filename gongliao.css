@@ -617,3 +617,101 @@
     font-weight: bold;
     z-index: 1;
 }
+
+/* 結尾區塊基本樣式 */
+.ending-section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
+
+/* 背景圖片 */
+.ending-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+
+/* 個別段落定位 */
+.ending-title {
+    position: absolute;
+    top: 10%;      /* 從頂部開始15% */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* 第一段內文 */
+.ending-content {
+    position: absolute;
+    top: 25%;    /* 從頂部開始25% */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* 製作團隊資訊 */
+.ending-credits {
+    position: absolute;
+    top: 35%;    /* 從頂部開始40% */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+/* 重新開始按鈕 */
+.restart-btn {
+    position: absolute;
+    bottom: 10%;   /* 從底部開始10% */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: rgba(35, 35, 35, 0.25);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.restart-btn:hover {
+    background-color: #404040;
+}
+
+/* 響應式設計 */
+@media screen and (max-height: 700px) {
+    .ending-title {
+        font-size: 1.8rem;
+        top: 10%;
+    }
+    
+    .ending-content:nth-of-type(1) {
+        top: 25%;
+        font-size: 1.1rem;
+    }
+    .ending-credits {
+        top: 60%;
+        font-size: 0.9rem;
+    }
+    
+    .restart-btn {
+        bottom: 5%;
+    }
+}
