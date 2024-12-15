@@ -303,3 +303,203 @@
     opacity: 1;
     visibility: visible;
 }
+
+/* 第四個區塊 */
+.long-section {
+    height: 300vh;
+    position: relative;
+}
+
+.long-section .background-section {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.character {
+    position: absolute;
+    height: 300px;
+    width: auto;
+}
+
+.character1 {
+    left: 5%;
+    bottom: -8.6%;
+}
+
+.character2 {
+    right: 35%;
+    bottom: -6%;
+}
+
+.text-box {
+    position: absolute;
+    background-color: rgba(35, 35, 35, 0.85);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    max-width: 300px;
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.text-box.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.text-box1 {
+    bottom: 50%;
+    left: 26%;
+}
+
+.text-box2 {
+    position: absolute;
+    background-color: rgba(35, 35, 35, 0.85);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    left: 53%;
+    bottom: 50%;
+}
+
+.text-box2.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 擴展區塊基本設定 */
+.extended-section {
+    height: 500vh;
+    position: relative;
+    width: 100%;
+}
+
+.extended-section .background-section {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+/* 內容包裝器設定 */
+.content-wrapper-fade {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+}
+
+.content-wrapper-fade.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 人物圖片特定樣式 */
+.character-fade {
+    position: absolute;
+    opacity: inherit;
+    visibility: inherit;
+    transition: inherit;
+}
+
+.character3 {
+    height: 500px;
+    width: auto;
+    left: 15%;
+    bottom: -6%;
+}
+
+/* 文字框樣式 */
+.text-box3 {
+    position: absolute;
+    background-color: rgba(35, 35, 35, 0.8);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.6;
+    left: 19%;
+    top: 3%;
+    opacity: inherit;
+    visibility: inherit;
+    transition: inherit;
+}
+
+/* 滾動文字區域設定 */
+.scroll-text-box {
+    position: absolute;
+    right: 8%;
+    top: 0;
+    width: 600px;
+    height: 100vh;
+    overflow: hidden;
+    opacity: inherit;
+    visibility: inherit;
+    transition: inherit;
+}
+
+.scroll-text-content {
+    position: absolute;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(35, 35, 35, 0.8);
+    color: white;
+    top: 40vh;
+}
+
+/* 新增的圖片樣式 */
+.content-image {
+    width: 520px;
+    height: 290px;
+    object-fit: cover;
+    display: block;
+    margin: 20px auto;
+    border-radius: 0.2rem;
+}
+
+/* 更新現有的捲動文字框樣式 */
+.scroll-text-content {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(35, 35, 35, 0.8);
+    color: white;
+}
+
+.scroll-text-content h2 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding: 0 16px;
+}
+
+.scroll-text-content h3 {
+    font-size: 1.2rem;
+    margin: 20px 0 20px;
+    padding: 0 16px;
+}
+
+.scroll-text-content p {
+    margin-bottom: 15px;
+    line-height: 1.7;
+    padding: 0 16px;
+}

@@ -120,63 +120,52 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 轉場處理函數
     function startTransition(container) {
-        // 找到下一個要顯示的區塊
         const nextSection = container.nextElementSibling;
         if (!nextSection) return;
         
-        // 標記開始轉場
         container.classList.add('transitioning');
-        
-        // 顯示遮罩層
         overlay.classList.add('active');
-        
-        // 禁止滾動
         document.body.style.overflow = 'hidden';
         
-        // 顯示 GIF
         const loadingGif = container.querySelector('.loading-gif');
         if (loadingGif) {
             loadingGif.classList.add('visible');
         }
 
-        // 創建下一個區塊的預載容器
         const preloadContainer = document.createElement('div');
         preloadContainer.className = 'next-section';
         preloadContainer.style.backgroundImage = window.getComputedStyle(nextSection).backgroundImage;
         document.body.appendChild(preloadContainer);
 
-        // 1.5秒後開始轉場
+        const timeoutId = setTimeout(() => {
+            if (container.classList.contains('transitioning')) {
+                finishTransition();
+            }
+        }, 5000);
+
         setTimeout(() => {
-            // 隱藏 GIF
             if (loadingGif) {
                 loadingGif.classList.remove('visible');
             }
-
-            // 顯示預載的下一個區塊
             preloadContainer.classList.add('visible');
 
-            // 等待淡入完成後
             setTimeout(() => {
-                // 滾動到下一個區塊
-                nextSection.scrollIntoView({ behavior: 'instant' });
-                
-                // 清理預載容器
-                preloadContainer.remove();
-                
-                // 恢復滾動
-                document.body.style.overflow = '';
-                
-                // 移除轉場標記
-                container.classList.remove('transitioning');
-                
-                // 隱藏遮罩層
-                overlay.classList.remove('active');
+                finishTransition();
+                clearTimeout(timeoutId);
             }, 500);
         }, 1500);
+
+        function finishTransition() {
+            nextSection.scrollIntoView({ behavior: 'instant' });
+            preloadContainer.remove();
+            document.body.style.overflow = '';
+            container.classList.remove('transitioning');
+            overlay.classList.remove('active');
+        }
     }
 
     // 地圖區域的內容更新
-    function updateContent(scrollProgress) {
+    function updateMapContent(scrollProgress) {
         if (scrollProgress <= 0.3) {
             showTextBlocks([0, 1]);
             activateBackground(0);
@@ -211,6 +200,87 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // 處理長區塊的滾動效果
+    function handleLongSection(section) {
+        const character1 = section.querySelector('.character1');
+        const textBox1 = section.querySelector('.text-box1');
+        const textBox2 = section.querySelector('.text-box2');
+        const sectionRect = section.getBoundingClientRect();
+        const sectionTop = window.pageYOffset + sectionRect.top;
+        const windowHeight = window.innerHeight;
+        
+        const scrollProgress = Math.max(0, Math.min(1, 
+            (window.pageYOffset - sectionTop) / windowHeight
+        ));
+        
+        if(character1) {
+            const newLeft = 5 + (scrollProgress * 30);
+            character1.style.left = `${newLeft}%`;
+        }
+        
+        const textBoxTriggerPoint1 = sectionTop + (windowHeight * 1.3);
+        const textBoxTriggerPoint2 = sectionTop + (windowHeight * 1.7);
+        
+        if(textBox1) {
+            if(window.pageYOffset > textBoxTriggerPoint1) {
+                textBox1.classList.add('active');
+            } else {
+                textBox1.classList.remove('active');
+            }
+        }
+        
+        if(textBox2) {
+            if(window.pageYOffset > textBoxTriggerPoint2) {
+                textBox2.classList.add('active');
+            } else {
+                textBox2.classList.remove('active');
+            }
+        }
+    }
+
+    // 處理擴展區塊的滾動效果
+    function handleExtendedSection(section) {
+        const contentWrapper = section.querySelector('.content-wrapper-fade');
+        const scrollTextContent = section.querySelector('.scroll-text-content');
+        const sectionRect = section.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // 計算區段已滾動的距離
+        const sectionScrolled = -sectionRect.top;
+        const triggerPoint = windowHeight * 0.6; // 60vh 的觸發點
+        
+        // 當滾動到 40vh 時顯示內容
+        if (sectionScrolled >= triggerPoint) {
+            if (contentWrapper) {
+                contentWrapper.classList.add('visible');
+            }
+            
+            // 計算文字捲動
+            if (scrollTextContent) {
+                // 從 40vh 開始計算捲動進度
+                const scrollProgress = Math.max(0, Math.min(1, 
+                    (sectionScrolled - triggerPoint) / (section.offsetHeight - windowHeight - triggerPoint)
+                ));
+                
+                // 計算文字內容應該移動的距離
+                const contentHeight = scrollTextContent.offsetHeight;
+                const maxScroll = contentHeight - windowHeight;
+                const scrollDistance = maxScroll * scrollProgress;
+                
+                // 應用位移
+                scrollTextContent.style.transform = `translateY(-${scrollDistance}px)`;
+            }
+        } else {
+            if (contentWrapper) {
+                contentWrapper.classList.remove('visible');
+            }
+            // 重置文字位置
+            if (scrollTextContent) {
+                scrollTextContent.style.transform = 'translateY(0)';
+            }
+        }
+    }
+
     // 導航按鈕點擊事件
     document.querySelector('.explore-btn').addEventListener('click', function() {
         if (!hasNavigated) {
@@ -230,7 +300,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', function() {
         if (!hasNavigated) return;
 
-        // 檢查是否有 loading container 正在轉場
         const isAnyTransitioning = Array.from(document.querySelectorAll('.loading-container')).some(
             container => container.classList.contains('transitioning')
         );
@@ -242,24 +311,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
         lastScrollTop = window.pageYOffset;
 
-        // 檢查每個 loading container
+        // 處理長區塊
+        const longSection = document.querySelector('.long-section');
+        if (longSection) {
+            handleLongSection(longSection);
+        }
+
+        // 處理擴展區塊
+        const extendedSection = document.querySelector('.extended-section');
+        if (extendedSection) {
+            handleExtendedSection(extendedSection);
+        }
+
+        // 處理地圖區域
+        const rect = stickyWrapper.getBoundingClientRect();
+        const scrollProgress = -rect.top / (rect.height - window.innerHeight);
+        if (scrollProgress >= 0 && scrollProgress <= 1) {
+            updateMapContent(scrollProgress);
+        }
+
+        // 處理 loading containers
         document.querySelectorAll('.loading-container').forEach(container => {
             const rect = container.getBoundingClientRect();
-            const threshold = 20; // 允許 20px 的誤差範圍
+            const threshold = 20;
             
-            // 如果到達頂端且沒有正在轉場
             if (rect.top >= -threshold && rect.top <= threshold && !container.classList.contains('transitioning')) {
                 startTransition(container);
             }
         });
-        
-        // 處理地圖區域的滾動
-        const rect = stickyWrapper.getBoundingClientRect();
-        const scrollProgress = -rect.top / (rect.height - window.innerHeight);
-        
-        if (scrollProgress >= 0 && scrollProgress <= 1) {
-            updateContent(scrollProgress);
-        }
     });
 
     // 事件監聽設置
